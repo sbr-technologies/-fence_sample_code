@@ -1,0 +1,36 @@
+%legend
+  %h3 Address
+
+= f.simple_fields_for :customer_addresses do |address|
+  = address.hidden_field :business_id, value: @business.id
+  .well.details
+    .row
+      .col-md-6
+        .input-group
+          %span.input-group-addon 
+            .glyphicon.glyphicon-search
+          %input.search_address.form-control
+      .col-md-5
+      .col-md-1
+        = address.link_to_remove method: :delete, data: { toggle:'tooltip', confirm: I18n.t('attention.confirm_deletion')}, class: 'btn btn-danger' do
+          %i.fa.fa-trash-o
+      %br
+    .row
+      .col-md-6
+        = address.input :line_1, input_html: {class: 'formatted_address'}
+      .col-md-2
+        = address.input :primary_address, as: :boolean, input_html: { class: 'is_primary' }
+    .row
+      .col-md-6
+        = address.input :line_2, input_html: {class: 'formatted_address2'}
+      .col-md-6
+        = address.input :city, input_html: {class: 'locality'}
+    .row
+      .col-md-6
+        = address.input :state, input_html: {class: 'administrative_area_level_1'}
+      .col-md-6
+        = address.input :zip, input_html: {class: 'postal_code zipcode'}
+
+.row
+  .col-md-12.pull-left
+    = f.link_to_add 'Add Address', :customer_addresses, class: 'btn btn-info'

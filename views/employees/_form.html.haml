@@ -1,0 +1,63 @@
+.body_header_new
+  .row
+    .col-md-4.form-group-lg
+      = f.input :last_name, required: true, input_html: {class: 'alpha_numeric'}
+    .col-md-4.form-group-lg
+      = f.input :first_name,required: true, input_html: {class: 'alpha_numeric'}
+    .col-md-2.form-group-lg
+      = f.input :middle_initial, label: 'MI', maxlength: 1, input_html: { class: 'letters_only'}
+  .row
+    .col-md-2.integer_field.form-group-lg
+      = f.input :employee_number, label: 'Employee Number', maxlength: 9, required: true, readonly: @employee.is_enterprise_admin?
+    .col-md-2.form-group-lg
+      = f.input :ssn, label: 'SSN'
+    .col-md-4.form-group-lg
+      = f.input :start_date, as: :string, wrapper: :date_field, as: :date_field, input_html: {class: 'start_date'}
+    .col-md-4.form-group-lg
+      = f.input :end_date, as: :string, wrapper: :date_field, as: :date_field, input_html: {class: 'end_date'}
+  .row
+    .col-md-3.form-group-lg
+      = f.input :hourly_rate, input_html: {amount: true}, wrapper: :amount, as: :string
+    .col-md-3.form-group-lg
+      = f.input :gross_salary, input_html: {amount: true}, wrapper: :amount, as: :string
+    .col-md-3.form-group-lg
+      = f.input :taxes, input_html: {amount: true}, wrapper: :amount, as: :string
+    .col-md-3.form-group-lg
+      = f.input :net_salary, input_html: {amount: true}, wrapper: :amount, as: :string
+  .row
+    .col-sm-4.form-group-lg
+      =f.input :employee_item_code, collection: employee_type_items, include_blank: 'Select Type', label: 'Type', input_html: {class: 'selectpicker'}
+    .col-sm-4.form-group-lg
+      =f.input :end_reason_item_code, collection: employee_end_reason_items, include_blank: 'Select End Reason', label: 'End Reason', input_html: {class: 'selectpicker'}
+    .col-sm-4.form-group-lg
+      =f.input :status_item_code, collection: employee_status_items, required: true, include_blank: 'Select Status', label: 'Status', input_html: {class: 'selectpicker'}
+  .row
+    .col-md-12.form-group-lg
+      = f.input :end_reason_notes
+  .row.login_fields
+    .col-md-3.form-group-lg
+      = f.input :email_address1
+    .col-md-3.form-group-lg
+      = f.input :password 
+  - unconfirmed_email = f.object.user.unconfirmed_email unless f.object.user.nil?
+  - if unconfirmed_email.present?
+    .row
+      .col-md-12.form-group-lg
+        %p
+          %b= unconfirmed_email
+          is not yet confirmed
+  = render partial: 'layouts/address', locals: {f: f}
+  = render partial: 'layouts/phone', locals: {f: f}
+
+:javascript
+  is_new_record = "#{@employee.new_record?}";
+  $(document).ready(function(){
+    $('#employee_employee_number').rules( "add", {
+      remote: {
+        url: "#{unique_employee_number_business_employees_path}",
+        type: 'post',
+        data: {'employee[id]': "#{@employee.id}"}
+      },
+      messages:{ remote: 'has already been taken'}
+    });
+  });

@@ -1,0 +1,18 @@
+%tr
+  %td
+    = employee.employee_number
+  %td
+    = employee.last_name
+  %td
+    = employee.first_name
+  %td
+    = employee.middle_initial
+  %td.text-center
+    = link_to edit_business_employee_path(@business, employee), data: { toggle:'tooltip'}, title: 'Edit', class: 'btn btn-default' do
+      %i.fa.fa-pencil
+  %td.text.center
+    - if employee.can_destroy?
+      = link_to business_employee_path(@business, employee), method: :delete, data: { toggle:'tooltip', confirm: I18n.t('attention.confirm_deletion')}, title: 'Delete', class: 'btn btn-danger' do
+        %i.fa.fa-trash-o
+    - else
+      = '--'

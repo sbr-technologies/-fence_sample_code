@@ -1,0 +1,37 @@
+%legend
+  %h3 Address
+
+= f.simple_fields_for :addresses do |address|
+  .well.details
+    .row
+      .col-md-6.form-group-lg.form-group
+        .input-group
+          %span.input-group-addon 
+            .glyphicon.glyphicon-search
+          %input.search_address.form-control
+      .col-md-5.form-group-lg.form-group
+      .col-md-1.form-group-lg.form-group.text-right.mirgintop_btn
+        = address.link_to_remove method: :delete, data: { toggle:'tooltip', confirm: I18n.t('attention.confirm_deletion')}, class: 'btn btn-danger' do
+          %i.fa.fa-trash-o
+      %br
+    .row
+      .col-md-6.form-group-lg
+        = address.input :line_1, input_html: {class: 'formatted_address'}
+      .col-md-4.form-group-lg
+        = address.input :line_2, input_html: {class: 'formatted_address_2'}
+      .col-md-2.form-group-lg.checkbox_text
+        = address.input :is_primary, as: :boolean, input_html: { class: 'is_primary' }
+    .row
+      .col-md-6.form-group-lg
+        = address.input :city, input_html: {class: 'locality not_all_numeric'}
+      .col-md-6.form-group-lg
+        = address.input :state, input_html: {class: 'administrative_area_level_1 not_all_numeric'}
+    .row
+      .col-md-6.form-group-lg
+        = address.input :zip, input_html: {class: 'postal_code zipcode'}
+      .col-md-6.form-group-lg
+        = address.input :zip_suffix_code, as: :string, input_html: {class: 'postal_code_suffix'}
+
+.row
+  .col-md-12.pull-left.form-group-lg
+    = f.link_to_add 'Add Address', :addresses, class: 'btn btn-info'

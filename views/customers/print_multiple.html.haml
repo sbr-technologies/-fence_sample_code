@@ -1,0 +1,45 @@
+!!! 5
+%html
+  %head
+    %meta{:name => 'pdfkit-header_html', :content => name_business_pdf_index_url(@business, :protocol => 'http') }
+    %meta{:name => 'pdfkit-footer_html', :content => footer_business_pdf_index_url(@business, :protocol => 'http') }
+    %meta{:name => 'pdfkit-margin_top', :content => '1.5in' }
+    %meta{:name => 'pdfkit-header_spacing', :content => '8' }
+  %body
+    .container-wrapper
+      %h2.sub_title List of Customers    
+      %table.table
+        %thead
+          %tr
+            %th Business Name
+            %th Address
+            %th City
+            %th State
+            %th Zip
+            %th Status
+        %tbody
+        - @customers.each do |customer|
+          %tr
+            %td
+              =customer.name
+            %td
+              - if customer.primary_address.present?
+                =customer.primary_address.line_1
+              - else
+                =customer.addresses.first.line_1
+            %td
+              - if customer.primary_address.present?
+                =customer.primary_address.city
+              - else
+                =customer.addresses.first.city
+            %td
+              - if customer.primary_address.present?
+                =customer.primary_address.state
+              - else
+                =customer.addresses.first.state
+            %td
+              - if customer.primary_address.present?
+                =customer.primary_address.zip
+              - else
+                =customer.addresses.first.zip
+            %td= customer.status

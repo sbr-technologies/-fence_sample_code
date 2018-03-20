@@ -1,0 +1,18 @@
+.header Proposal Terms 
+= simple_nested_form_for(@business) do |f|
+  = f.simple_fields_for :default_proposal_term do |terms|
+    .well
+      .row
+        .col-md-12
+          = terms.input :proposal_terms, as: :text
+      .row
+        .col-md-12
+          %label.control-label Payment Terms
+          = terms.cktext_area :payment_terms, as: :text
+      %br
+      .row
+        .col-md-12
+          %label.control-label Additional Provisions
+          = terms.cktext_area :additional_provision, as: :text
+  = f.button :submit, 'Save', class: 'btn btn-primary'
+  = link_to 'Cancel', root_path, class: 'btn btn-primary'

@@ -1,0 +1,163 @@
+<div ng-controller="employeeCtrl">
+<div class='supplier_title'>
+  <h1>Employees</h1>
+</div>
+<div class='body_header'>
+  <div class='row'>
+    <div class='col-sm-5'>
+      <div class='col-xs-6'>
+          <%= link_to 'Add Employee', new_business_employee_path(@business), class: 'btn btn-success1 btn-lg btn-block'  %>
+      </div>
+      <div class='col-xs-6'>
+        <%= link_to('Delete', '#deleteConfirmationDialog', :class => 'btn btn-default1 btn-lg btn-block', :'ng-disabled' => '!isChecked()', :data => {:toggle => 'modal'}) %>
+      </div>
+    </div>
+    <div class='col-sm-7'>
+      <div class='col-sm-10'>
+        <div class='table_search_div'>
+          <div class='input-group form-group-lg'>
+            <span class='input-group-addon'>
+              <i class='fa fa-search'></i>
+            </span>
+              <input class="form-control" ng-model="search" placeholder="Search" type="search" />
+          </div>
+        </div>
+      </div>
+      <div class='col-sm-2 print_div'>
+        <a href="#printConfirmationDialog" class="btn btn-link btn-lg" data-toggle="modal" ng-disabled="!isChecked()"><i class='fa fa-print'></i> Print</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='container-fluid xyz'>
+  <div>
+    <div class='row'>
+      <div class='table-responsive dashboarde_table row_margin0'>
+        <form action="#" name="frm_employee">
+        <table class="table tab-content"  ng-init="getEmployees()">
+            <thead>
+              <tr>
+                <th class="text-center" width="5%">
+                  <div class='checkbox_div'>
+                    <label for='checkall'>
+                      <input id='checkall' type="checkbox" ng-model="selectedAll" ng-click="toggleSeleted()">
+                      <span></span>
+                    </label>
+                  </div>
+                </th>
+                <th><a href="" ng-click="sort('employee_number')">Employee Number
+                    <i class="fa fa-sort-alpha-asc" ng-show="sortKey=='employee_number'" ng-class="{'fa-sort-alpha-desc':reverse,'fa-sort-alpha-asc':!reverse}"></i>
+                  </a>
+                </th>
+                <th>
+                  <div class='relativ_div'>
+                    <a href="" ng-click="sort('last_name')">Last Name
+                    <i class="fa fa-sort-alpha-asc" ng-show="sortKey=='last_name'" ng-class="{'fa-sort-alpha-desc':reverse,'fa-sort-alpha-asc':!reverse}"></i>
+                  </a>
+                  </div>
+                </th>
+                <th width="15%">
+                  <div class='relativ_div'>
+                  <a href="" ng-click="sort('first_name')">First Name
+                    <i class="fa fa-sort-alpha-asc" ng-show="sortKey=='first_name'" ng-class="{'fa-sort-alpha-desc':reverse,'fa-sort-alpha-asc':!reverse}"></i>
+                  </a>
+                </div>
+                </th>
+                <th width="15%">
+                  <div class='relativ_div'>
+                  <a href="" ng-click="sort('middle_initial')">Middle Name
+                    <i class="fa fa-sort-alpha-asc" ng-show="sortKey=='middle_initial'" ng-class="{'fa-sort-alpha-desc':reverse,'fa-sort-alpha-asc':!reverse}"></i>
+                  </a>
+                </div>
+                </th>
+                <th width="5%">Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-hide="listLoaded">
+                <td colspan="6" class="text-center">Loading...</td>
+              </tr>
+              <tr dir-paginate="employee in employees|orderBy:sortKey:reverse|filter:search|itemsPerPage:30">
+                <td width="5px" align="center">
+                  <div class="checkbox_div">
+                    <label for="checkbox_{{employee.id}}">
+                      <input 
+                        type="checkbox" 
+                        id="checkbox_{{employee.id}}"
+                        value="{{employee.id}}"
+                        ng-checked="employee.checked"
+                        ng-model="employee.checked"
+                        >
+                      <span></span>
+                    </label>
+                  </div>
+                </td>
+                <td width="200px">
+                  <div ng-hide="employee.numberEditorEnabled">
+                    <a href="#" ng-click="enableNumberEditor(employee)" ng-bind-html="employee.employee_number | highlight:search "></a>
+                  </div>
+                  <div ng-show="employee.numberEditorEnabled">
+                    <input type="text" ng-model="employee.editableNumber" ng-show="employee.numberEditorEnabled" name="txt_employee_number_{{$index}}" class="input_block employee_number" ng-maxlength="9" maxlength="9" required ng-unique-employee-number ng-pattern="numericOnlyRegex">
+                    <div class="inline_edit_buttons"><a href="#" class="btn btn-link" ng-disabled="frm_employee['txt_employee_number_{{$index}}'].$invalid" ng-click="updateField(employee, 'employee_number', 'editableNumber')">Save</a>
+                    or
+                    <a href="#" ng-click="disableNumberEditor(employee)">cancel</a></div>
+                  </div>
+                </td>
+                
+                <td width="200px">
+                  <div ng-hide="employee.lastNameEditorEnabled">
+                    <a href="#" ng-click="enableLastNameEditor(employee)" ng-bind-html="employee.last_name | highlight:search"></a>
+                  </div>
+                  <div ng-show="employee.lastNameEditorEnabled">
+                    <input ng-model="employee.editableLastName" ng-show="employee.lastNameEditorEnabled" name="txt_last_name_{{$index}}" class="input_block last_name" required="" ng-pattern="alphaNumericRegex">
+                    <div class="inline_edit_buttons"><a href="#" class="btn btn-link" ng-disabled="frm_employee['txt_last_name_{{$index}}'].$invalid" ng-click="updateField(employee, 'last_name', 'editableLastName')">Save</a>
+                    or
+                    <a href="#" ng-click="disableLastNameEditor(employee)">cancel</a></div>
+                  </div>
+                </td>
+                
+                <td width="200px">
+                  <div ng-hide="employee.firstNameEditorEnabled">
+                    <a href="#" ng-click="enableFirstNameEditor(employee)" ng-bind-html="employee.first_name | highlight:search"></a>
+                  </div>
+                  <div ng-show="employee.firstNameEditorEnabled">
+                    <input ng-model="employee.editableFirstName" ng-show="employee.firstNameEditorEnabled" name="txt_first_name_{{$index}}" class="input_block first_name" required="" ng-pattern="alphaNumericRegex">
+                    <div class="inline_edit_buttons"><a href="#" class="btn btn-link" ng-disabled="frm_employee['txt_first_name_{{$index}}'].$invalid" ng-click="updateField(employee, 'first_name', 'editableFirstName')">Save</a>
+                    or
+                    <a href="#" ng-click="disableFirstNameEditor(employee)">cancel</a></div>
+                  </div>
+                </td>
+                
+                <td width="200px">
+                  <div ng-hide="employee.miNameEditorEnabled">
+                    <a href="#" ng-click="enableMiNameEditor(employee)" ng-bind-html="employee.middle_initial | highlight:search"></a>
+                  </div>
+                  <div ng-show="employee.miNameEditorEnabled">
+                    <input ng-model="employee.editableMiName" ng-show="employee.miNameEditorEnabled" name="txt_middle_initial_{{$index}}" class="input_block middle_initial" ng-pattern="lettersOnlyRegex" maxlength="1">
+                    <div class="inline_edit_buttons"><a href="#" class="btn btn-link" ng-disabled="frm_employee['txt_middle_initial_{{$index}}'].$invalid" ng-click="updateField(employee, 'middle_initial', 'editableMiName')">Save</a>
+                    or
+                    <a href="#" ng-click="disableMiNameEditor(employee)">cancel</a></div>
+                  </div>
+                </td>
+                <td>
+                  <%= link_to URI.unescape(edit_business_employee_path(@business, '{{employee.id}}')), data: { toggle:'tooltip'}, title: 'Edit', class: 'btn btn-default' do
+                      '<i class="fa fa-pencil"></i>'.html_safe
+                      end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+          <dir-pagination-controls
+            max-size="7"
+            align="center"
+            direction-links="true"
+            boundary-links="true" >
+          </dir-pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render template: 'employees/_confirmation_delete_dialog.html.haml' %>
+<%= render template: 'employees/_confirmation_print_dialog.html.haml' %>
+</div>

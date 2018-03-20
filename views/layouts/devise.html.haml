@@ -1,0 +1,30 @@
+!!! 5
+%html
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}
+    %meta{:content => "", :name => "description"}
+    %meta{:content => "", :name => "author"}
+    %title FenceDev application
+    = stylesheet_link_tag 'devise', media: 'all'
+    %script{:src => "https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"}
+    %script{"data-require" => "angular.js@1.3.16", "data-semver" => "1.3.16", :src => "https://code.angularjs.org/1.3.16/angular.js"}
+    :javascript
+      calendar_path = "#{asset_path('calendar.gif')}"
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  %body{:style => "padding-top:15px;"}
+    .container
+      = render 'layouts/flash_messages'
+      = yield    
+
+    :javascript
+      complete_name_required = "#{I18n.t('errors.customer.complete_name_required')}"
+      either_of_name_required = "#{I18n.t('errors.customer.either_of_name_required')}"
+      two_decimal_allowed = "#{I18n.t('errors.generic.two_decimal_allowed')}"
+      no_decimal_allowed = "#{I18n.t('errors.generic.no_decimal_allowed')}"
+      invalid_zip = "#{I18n.t('errors.generic.invalid_zip')}"
+      invalid_phone_number = "#{I18n.t('errors.generic.invalid_phone_number')}"
+      invalid_phone_ext = "#{I18n.t('errors.generic.invalid_phone_ext')}"
+      password_do_not_match = "#{I18n.t('errors.user.password_do_not_match')}"

@@ -1,0 +1,9 @@
+%tr
+  %td
+    = supplier.name
+  %td.text-center
+    = link_to edit_business_supplier_path(current_business, supplier), data: { toggle:'tooltip'}, title: 'Edit', class: 'btn btn-default' do
+      %i.fa.fa-pencil
+  %td.text-center
+    = link_to business_supplier_path(current_business, supplier), method: :delete, data: { toggle:'tooltip', confirm: I18n.t('attention.confirm_deletion')}, title: 'Delete', class: 'btn btn-danger' do
+      %i.fa.fa-trash-o

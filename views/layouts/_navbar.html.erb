@@ -1,0 +1,30 @@
+<nav class="navbar navbar-default no-margin navigation_top"> 
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header fixed-brand">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> </button>
+                <%#= link_to image_tag("fence.png", :title => 'fENCe'), root_path, :class => 'navbar-brand'%>
+                <%= link_to image_tag(@business.logo.url, :title => 'fENCe', :height=>80, :alt => 'fENCe' ), root_path, :class => 'navbar-brand' %>
+        </div>
+	<!-- navbar-header-->
+	
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="profile_div dropdown"> <a href="#"  id="dropdownprofile" data-toggle="dropdown"> <%= image_tag 'profile.jpg' %> <i class="fa fa-chevron-down"></i> </a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownprofile">
+				<li> <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a> </li>
+				<li> <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a> </li>
+				<li> <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a> </li>
+                                <li>
+                                    <%= link_to destroy_user_session_path, method: :delete do %>
+                                      <i class="fa fa-fw fa-power-off"></i> Sign Out
+                                    <% end %>
+                                </li>
+			</ul>
+		</div>
+		<div class="search_div">
+			<div class="input-group form-group-lg"> <span class="input-group-addon"><i class="fa fa-search"></i></span>
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</div>
+	</div>
+	<!-- bs-example-navbar-collapse-1 --> 
+</nav>

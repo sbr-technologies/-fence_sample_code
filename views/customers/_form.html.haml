@@ -1,0 +1,32 @@
+.body_header_new
+  .row
+    .col-md-8.form-group-lg
+      = f.input :business_name, label: '<abbr title="Either Business name or First/Last name are required">*</abbr>Business Name'.html_safe, input_html: {class: 'not_all_numeric'}
+    .col-md-4.form-group-lg
+      = f.input :margin_percent,  input_html: {step: 1, min: 0, max: 99.99, value: number_with_precision(@customer.margin_percent, precision: 2)}
+  .row
+    .col-md-4.form-group-lg
+      = f.input :last_name, label: '<abbr title="Either Business name or First/Last name are required">*</abbr>Last Name'.html_safe, input_html: {class: 'alpha_numeric'}
+    .col-md-4.form-group-lg
+      = f.input :first_name, label: '<abbr title="Either Business name or First/Last name are required">*</abbr>First Name'.html_safe, input_html: {class: 'alpha_numeric'}
+    .col-md-2.form-group-lg
+      = f.input :middle_initial, label: 'MI', maxlength: 1, input_html: { class: 'letters_only'}
+  .row
+    .col-md-4.form-group-lg
+      = f.input :start_date, as: :string, wrapper: :date_field, as: :date_field, input_html: {class: 'start_date'}
+    .col-md-4.form-group-lg
+      = f.input :end_date, as: :string, wrapper: :date_field, as: :date_field, input_html: {class: 'end_date'}
+    .col-md-4.form-group-lg
+      = f.input :business_account_nmbr, label: 'Organization A/C #'
+  .row
+    .col-sm-4.form-group-lg
+      =f.input :end_reason_item_code, collection: customer_end_reason_items, include_blank: 'Select End Reason', label: 'End Reason', input_html: {class: 'selectpicker'}
+    .col-md-4.form-group-lg
+      = f.input :status_item_code, collection: customer_status_items, include_blank: 'Select Status', label: 'Status', input_html: {class: 'selectpicker'}
+  .row
+    .col-md-12.form-group-lg
+      = f.input :end_reason_notes
+  .col-md-9
+  = render partial: 'layouts/contact_person', locals: {f: f}
+  = render partial: 'layouts/address', locals: {f: f}
+  = render partial: 'layouts/phone', locals: {f: f}

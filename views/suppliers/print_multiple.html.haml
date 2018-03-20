@@ -1,0 +1,28 @@
+!!! 5
+%html
+  %head
+    %meta{:name => 'pdfkit-header_html', :content => name_business_pdf_index_url(@business, :protocol => 'http') }
+    %meta{:name => 'pdfkit-footer_html', :content => footer_business_pdf_index_url(@business, :protocol => 'http') }
+    %meta{:name => 'pdfkit-margin_top', :content => '1.5in' }
+    %meta{:name => 'pdfkit-header_spacing', :content => '8' }
+  %body
+    .container-wrapper
+      %h2.sub_title List of Employees
+      %table.table
+        %thead
+          %tr
+            %th Business Name
+            %th Account Number
+            %th Start Date
+            %th Status
+        %tbody
+        - @suppliers.each do |supplier|
+          %tr
+            %td
+              =supplier.name
+            %td
+              =supplier.business_account_number
+            %td
+              =supplier.start_date
+            %td
+              =supplier.status

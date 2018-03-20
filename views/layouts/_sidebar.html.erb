@@ -1,0 +1,61 @@
+    <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+        <li> 
+          <a href="/">
+            <span class="fa-stack fa-lg pull-left"><i class="fa fa-clone fa-stack-1x "></i></span> Dashboard
+          </a>
+        </li>
+        <li class="sub_link"> <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-tasks fa-stack-1x "></i></span> Tasks</a>
+            <ul class="nav-pills nav-stacked">
+                <li class="<%= "select" if params[:controller] == "contract_proposals" %>">
+                  <%= link_to fa_icon("book", text: "Contract Proposal"), business_contract_proposals_path(@business) %>
+                </li>
+                <li><a href="#">Tasks link2</a></li>
+            </ul>
+        </li>
+        <li class="sub_link"> <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-share-alt fa-stack-1x "></i></span> Maintenance</a>
+            <ul class="nav-pills nav-stacked">
+                <li class="<%= "select" if params[:controller] == "products" %>">
+                  <%= link_to fa_icon("bars", text: "Products"), business_products_path(@business) %>
+                </li>
+                <li class="<%= "select" if params[:controller] == "project_groups" %>">
+                  <%= link_to fa_icon("sitemap", text: "Projects"), business_project_groups_path(@business) %>
+                </li>
+                <li  class="<%= "select" if params[:controller] == "employees" %>">
+                  <%= link_to fa_icon("user", text: "Employee"), business_employees_path(@business) %>
+                </li>
+                <li  class="<%= "select" if params[:controller] == "customers" %>">
+                  <%= link_to fa_icon("users", text: "Customer"), business_customers_path(@business) %>
+                </li>
+                <li  class="<%= "select" if params[:controller] == "suppliers" %>">
+                  <%= link_to fa_icon("truck", text: "Supplier"), business_suppliers_path(@business) %>
+                </li>
+                <li  class="<%= "select" if params[:controller] == "manufacturers" %>">
+                  <%= link_to fa_icon("building", text: "Manufacturer"), business_manufacturers_path(@business) %>
+                </li>
+            </ul>
+        </li>
+        <li class="sub_link"> <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-clock-o fa-stack-1x "></i></span> Admin</a>
+            <ul class="nav-pills nav-stacked">
+                <li  class="<%= "select" if params[:controller] == "business" %>">
+                  <%= link_to fa_icon("suitcase", text: "Business Info"), edit_business_path(@business) %>
+                </li>
+                <li  class="<%= "select" if params[:controller] == "lookup_items" %>">
+                  <%= link_to fa_icon("bars", text: "Lookup Values"), business_lookup_items_path(@business) %>
+                </li>
+            </ul>
+        </li>
+        <li class="sub_link"> <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar-minus-o fa-stack-1x "></i></span> Reporting</a>
+            <ul class="nav-pills nav-stacked">
+              <li  class="<%= "select" if params[:controller] == "reporting/contract_proposals" %>">
+                <%= link_to fa_icon("bars", text: "Contract Proposals"), business_reporting_contract_proposals_path(@business) %>
+              </li>
+                <li><a href="#">Reporting link2</a></li>
+            </ul>
+        </li>
+        <li class="sub_link"> <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cogs fa-stack-1x "></i></span> Setting</a>
+            <ul class="nav-pills nav-stacked">
+                <li><a href="#">Setting link1</a></li>
+                <li><a href="#">Setting link2</a></li>
+            </ul>
+        </li>
+    </ul>

@@ -1,0 +1,25 @@
+- only_one = only_one || false
+- label = label.nil? ? 'Phone' : label
+%legend
+  %h3= label
+= f.simple_fields_for :phones do |phone|
+  .well
+    .row
+      .col-md-4.form-group-lg
+        = phone.input :phone_number, input_html: {class: 'phone_field'}
+      .col-md-2.form-group-lg
+        = phone.input :phone_number_ext, input_html: {class: 'phone_ext'}, label: 'Ext'
+      .col-md-3.form-group-lg
+        = phone.input :phone_item_code, collection: phone_type_items, include_blank: false, label: 'Type', input_html: {class: 'selectpicker'}
+      .col-md-2.form-group-lg.checkbox_text
+        = phone.input :is_primary, as: :boolean, input_html: { class: 'is_primary_phone' }
+      - unless only_one
+        .col-md-1.form-group-lg.text-right.btn_top_padding
+          = phone.link_to_remove method: :delete, data: { toggle:'tooltip', confirm: I18n.t('attention.confirm_deletion')}, class: 'btn btn-danger' do
+            %i.fa.fa-trash-o
+- unless only_one
+  .row
+    .col-md-12.pull-left.form-group-lg
+      = f.link_to_add :phones, class: 'btn btn-info' do
+        %span.glyphicon.glyphicon-phone-alt
+        %span Add Phone

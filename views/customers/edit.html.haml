@@ -1,0 +1,18 @@
+.update_project
+  = simple_nested_form_for [@business, @customer] do |f|
+    .breadcrumbs_save_close.clearfix
+      .row
+        .col-sm-8
+          .row
+            %ol.breadcrumb
+              %li 
+                = link_to 'Customers', business_customers_path(@business)
+              %li.active
+                =@customer.get_name
+        .col-sm-4
+          .row
+            .col-xs-6
+              = f.button :submit, 'Save', class: 'btn btn-success1 btn-lg btn-block'
+            .col-xs-6
+              = link_to 'Close', business_customers_path(@business), :class => 'btn btn-default1 btn-lg btn-block'
+    = render 'form', {:f => f }

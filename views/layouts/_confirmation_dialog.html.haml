@@ -1,0 +1,11 @@
+#confirmationDialog.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h4#myModalLabel.modal-title Confirmation
+      .modal-body
+        Are you sure you want to delete?
+      .modal-footer{:style => "border: none"}
+        %button.btn.btn-default.cancel{"data-dismiss" => "modal", :type => "button"} No
+        %button.btn.btn-success.confirm{"data-dismiss" => "modal", :type => "button"} Yes

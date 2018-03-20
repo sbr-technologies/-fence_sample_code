@@ -1,0 +1,25 @@
+%legend
+  %h3 Contact
+
+= f.simple_fields_for :contact_persons do |contact|
+  .well
+    .row
+      .col-md-4.form-group-lg
+        = contact.input :last_name
+      .col-md-4.form-group-lg
+        = contact.input :first_name
+      .col-md-2.form-group-lg
+        = contact.input :middle_initial, label: 'MI', maxlength: 1, input_html: { class: 'letters_only'}
+      .col-md-2.form-group-lg.text-right.btn_top_padding
+        = contact.link_to_remove method: :delete, data: { toggle:'tooltip', confirm: I18n.t('attention.confirm_deletion')}, class: 'btn btn-danger' do
+          %i.fa.fa-trash-o
+    .row
+      .col-md-4.form-group-lg
+        = contact.input :email_address1
+      .col-md-4.form-group-lg
+        = contact.input :email_address2
+      .col-md-4.form-group-lg
+        = contact.input :email_address3
+.row
+  .col-md-12.pull-left
+    = f.link_to_add 'Add Contact', :contact_persons, class: 'btn btn-info'
